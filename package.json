@@ -1,49 +1,35 @@
 {
-  "name": "express-postgres-starter",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Starter project using Express and Postgres",
-  "main": "config.js",
-  "scripts": {
-    "test": "xo",
-    "lint": "xo",
-    "format": "xo --fix",
-    "start": "node ./bin/start.js",
-    "dev": "nodemon ./bin/start.js",
-    "migrate": "node ./bin/migrate.js",
-    "migrate:create": "migrate create --migrations-dir='./src/migrations'"
-  },
-  "keywords": [
-    "express",
-    "postgres"
-  ],
-  "author": "Hugo Di Francesco",
-  "license": "MIT",
-  "dependencies": {
-    "bcrypt": "^5.0.0",
-    "client-sessions": "^0.8.0",
-    "express": "^4.17.1",
-    "helmet": "^4.1.0",
-    "migrate": "^1.7.0",
-    "morgan": "^1.10.0",
-    "pg": "^8.3.3",
-    "sql-template-strings": "^2.2.2",
-    "uuid": "^8.3.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4",
-    "xo": "^0.33.1"
-  },
-  "xo": {
-    "prettier": true,
-    "space": true
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HugoDF/express-postgres-starter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/HugoDF/express-postgres-starter/issues"
-  },
-  "homepage": "https://github.com/HugoDF/express-postgres-starter#readme"
+	"name": "freezer-manager-api",
+	"private": true,
+	"version": "1.0.0",
+	"description": "Api for Freezer Manager",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js",
+		"lint": "eslint \"**/*.js\"",
+		"jest": "jest",
+		"up": "docker-compose up"
+	},
+	"author": "Nicolai H. Nielsen - Morten Vismark",
+	"license": "MIT",
+	"dependencies": {
+		"eslint-config-prettier": "^6.11.0",
+		"express": "^4.17.1",
+		"helmet": "^4.1.0",
+		"knex": "^0.21.5",
+		"pg": "^8.3.3",
+		"prettier": "^2.1.1",
+		"uuid": "^8.3.0",
+		"winston": "^3.3.3"
+	},
+	"devDependencies": {
+		"eslint": "^7.8.1",
+		"jest": "^26.4.2",
+		"nodemon": "^2.0.4"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Mcbeer/freezer-manager-api.git"
+	}
 }

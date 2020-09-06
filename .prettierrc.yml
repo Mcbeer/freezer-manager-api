@@ -1,0 +1,9 @@
+singleQuote: true
+useTabs: true
+trailingComma: "es5"
+endOfLine: "lf"
+overrides:
+  # Single quotes can give problems in bitbucket-pipelines.yml when includeing variables, ie "$AWS_KEY"
+  - files: "*.yml"
+    options:
+      singleQuote: false
