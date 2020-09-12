@@ -11,7 +11,12 @@ services:
       PORT: 3000
     ports:
       - '8000:3000'
-    command: npm run dev
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        npm i
+        npm run dev 
     volumes:
       - .:/app/
       - /app/node_modules

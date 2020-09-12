@@ -6,7 +6,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"dev": "nodemon index.js",
+		"dev": "nodemon -L index.js",
 		"lint": "eslint \"**/*.js\"",
 		"jest": "jest",
 		"up": "docker-compose up"
@@ -14,6 +14,8 @@
 	"author": "Nicolai H. Nielsen - Morten Vismark",
 	"license": "MIT",
 	"dependencies": {
+		"body-parser": "^1.19.0",
+		"cors": "^2.8.5",
 		"express": "^4.17.1",
 		"helmet": "^4.1.0",
 		"knex": "^0.21.5",
