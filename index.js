@@ -24,7 +24,7 @@ app.get('/container/all', (req, res) => {
 	database
 		.select('*')
 		.from('container')
-		.orderBy('updated_at', 'desc')
+		.orderBy('last_used', 'desc')
 		.then((containers) => {
 			res.json(containers);
 		});
@@ -41,10 +41,30 @@ app.post('/container/post', (req, res) => {
 		.insert(containerToPost)
 		.returning('*')
 		.then((newContainer) => {
-			res.json(newContainer);
+			res.json(newContainer[0]);
 		})
 		.catch((err) => {
 			res.send('Der skete en fejl. Noget mangler');
+		});
+});
+
+//Update container
+app.put('/container/update/:containerId', (req, res) => {
+	const containerToPut = {
+		name: req.body.name,
+		description: req.body.description,
+		updated_at: new Date().toISOString(),
+		last_used: new Date().toISOString(),
+	};
+
+	return database('container')
+		.update(containerToPut)
+		.returning('*')
+		.where({
+			id: req.params.containerId,
+		})
+		.then((container) => {
+			res.json(container[0]);
 		});
 });
 
@@ -55,30 +75,62 @@ app.get('/product/:containerId', (req, res) => {
 		.where({
 			container_id: req.params.containerId,
 		})
+		.orderBy('created_at', 'desc')
 		.then((products) => {
 			res.json(products);
 		});
 });
+
+//Post product
 app.post('/product/post', (req, res) => {
 	const productToPost = {
 		container_id: req.body.container_id,
 		name: req.body.name,
 		amount: req.body.amount,
-		unit: req.body.unit,
+		unit_id: req.body.unit_id,
 		expiration_date: req.body.expiration_date,
 	};
+	console.log(productToPost);
 
 	database('product')
 		.insert(productToPost)
 		.returning('*')
 		.then((newProduct) => {
-			res.json(newProduct);
+			database('container')
+				.update({
+					last_used: new Date().toISOString(),
+				})
+				.returning('*')
+				.where({
+					id: productToPost.container_id,
+				})
+				.then((container) => {
+					res.json({ newProduct, container });
+				});
 		})
 		.catch((err) => {
 			res.send('Der skete en fejl. Noget mangler');
 		});
 });
 
+//Get all available units
+app.get('/units/all', (req, res) => {
+	return database('unit')
+		.select('*')
+		.then((units) => {
+			return res.json(units);
+		});
+});
+
+//Get unit from id
+app.get('/units/:unitId', (req, res) => {
+	return database('unit')
+		.select('*')
+		.where({ unit_id: req.params.unitId })
+		.then((unit) => {
+			res.json({ unit });
+		});
+});
 app.use(errorHandler);
 
 //DONT WRITE BELOW THIS
