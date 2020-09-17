@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { database } = require('./src/db/db.connection');
 const { logger } = require('./src/utils/logger');
-const { errorHandler } = require('./src/middleware/errorHandler');
 
 const app = express();
 app.use(express.json());
@@ -129,9 +128,12 @@ app.get('/units/:unitId', (req, res) => {
 		.where({ unit_id: req.params.unitId })
 		.then((unit) => {
 			res.json({ unit });
+		})
+		.catch((err) => {
+			res.send("Error fetching unit from the database");
 		});
 });
-app.use(errorHandler);
+
 
 //DONT WRITE BELOW THIS
 app.listen(process.env.PORT, () => {
